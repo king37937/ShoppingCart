@@ -8,13 +8,13 @@ namespace ShoppingCart
 {
     public class ShoppingCart
     {
-        public object CalculatePrice(List<Book> books)
+        public decimal CalculatePrice(List<Book> books)
         {
-            if (books.Count == 1 && books[0].Id == 1)
+            if (books.Count == 1)
             {
                 return books[0].UnitPrice;
             }
-            return books.Sum(x => x.UnitPrice)*0.95m;
+            return books.Sum(x => x.UnitPrice) * 0.95m;
         }
     }
 }
