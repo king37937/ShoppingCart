@@ -14,7 +14,7 @@ namespace ShoppingCart
             {
                 return books[0].UnitPrice;
             }
-            return 0;
+            return books.Sum(x => x.UnitPrice)*0.95m;
         }
     }
 }
