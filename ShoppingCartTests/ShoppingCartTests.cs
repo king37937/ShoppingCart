@@ -14,13 +14,13 @@ namespace ShoppingCart.Tests
     public class ShoppingCartTests
     {
         [TestMethod()]
-        public void CalculatePriceTest()
+        public void CalculatePriceTest_Id_1_Quantity_1_should_return_100m()
         {
             //arrange
             var target = new ShoppingCart();
             var books = new List<Book>
             {
-                new Book() { Id = 1,  Quantity = 1, UnitPrice = 100 }
+                new Book() { Id = 1,  Quantity = 1, UnitPrice = 100m }
             };
             var expected = 100m;
 
