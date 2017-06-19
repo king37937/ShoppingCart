@@ -8,9 +8,9 @@ namespace ShoppingCart
 {
     public class ShoppingCart
     {
-        public decimal CalculatePrice()
+        public object CalculatePrice(List<Book> books)
         {
-            return 0;
+            throw new NotImplementedException();
         }
     }
 }
