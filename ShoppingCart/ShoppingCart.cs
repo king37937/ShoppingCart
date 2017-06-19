@@ -11,15 +11,22 @@ namespace ShoppingCart
     {
         public decimal CalculatePrice(List<Book> books)
         {
-            if (books.Count == 1)
+            return books.Sum(x=>x.UnitPrice) * GetDiscount(books.Count);
+        }
+
+        private decimal GetDiscount(int count)
+        {
+            switch (count)
             {
-                return books[0].UnitPrice;
+                case 1:
+                    return 1m;
+                case 2:
+                    return 0.95m;
+                case 3:
+                    return 0.9m;
+                default:
+                    throw new ArgumentException("Invaild argument count: " + count);
             }
-            if (books.Count == 2)
-            {
-                return books.Sum(x => x.UnitPrice) * 0.95m;
-            }
-            return books.Sum(x => x.UnitPrice) * 0.9m;
         }
     }
 }
