@@ -24,6 +24,8 @@ namespace ShoppingCart
                     return 0.95m;
                 case 3:
                     return 0.9m;
+                case 4:
+                    return 0.8m;
                 default:
                     throw new ArgumentException("Invaild argument count: " + count);
             }
