@@ -11,7 +11,15 @@ namespace ShoppingCart
     {
         public decimal CalculatePrice(List<Book> books)
         {
-            return books.Sum(x=>x.UnitPrice) * GetDiscount(books.Count);
+            var discountBooks = books.Select(x => new Book { Id = x.Id, Quantity = 1, UnitPrice = x.UnitPrice }).ToList();
+            var remainBooks = books.Where(x => x.Quantity > 1).Select(x => new Book { Id = x.Id, Quantity = x.Quantity - 1, UnitPrice = x.UnitPrice }).ToList();
+            var totalPrice = discountBooks.Sum(x => x.UnitPrice) * GetDiscount(discountBooks.Count);
+            while (remainBooks.Count > 0)
+            {
+                totalPrice += remainBooks.Sum(x => x.UnitPrice) * GetDiscount(remainBooks.Count);
+                remainBooks = remainBooks.Where(x => x.Quantity > 1).Select(x => new Book { Id = x.Id, Quantity = x.Quantity - 1, UnitPrice = x.UnitPrice }).ToList();
+            }
+            return totalPrice;
         }
 
         private decimal GetDiscount(int count)
