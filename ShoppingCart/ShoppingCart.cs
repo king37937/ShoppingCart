@@ -11,18 +11,32 @@ namespace ShoppingCart
     {
         public decimal CalculatePrice(List<Book> books)
         {
-            var discountBooks = books.Select(x => new Book { Id = x.Id, Quantity = 1, UnitPrice = x.UnitPrice }).ToList();
-            var remainBooks = books.Where(x => x.Quantity > 1).Select(x => new Book { Id = x.Id, Quantity = x.Quantity - 1, UnitPrice = x.UnitPrice }).ToList();
-            var totalPrice = discountBooks.Sum(x => x.UnitPrice) * GetDiscount(discountBooks.Count);
+            var totalPrice = CalculateDiscountPrice(GetDiscountBooks(books));
+            var remainBooks = GetRemainBooks(books);
             while (remainBooks.Count > 0)
             {
-                totalPrice += remainBooks.Sum(x => x.UnitPrice) * GetDiscount(remainBooks.Count);
-                remainBooks = remainBooks.Where(x => x.Quantity > 1).Select(x => new Book { Id = x.Id, Quantity = x.Quantity - 1, UnitPrice = x.UnitPrice }).ToList();
+                totalPrice += CalculateDiscountPrice(remainBooks);
+                remainBooks = GetRemainBooks(remainBooks);
             }
             return totalPrice;
         }
 
-        private decimal GetDiscount(int count)
+        private decimal CalculateDiscountPrice(List<Book> discountBooks)
+        {
+            return discountBooks.Sum(x => x.UnitPrice) * GetDiscountRate(discountBooks.Count);
+        }
+
+        private List<Book> GetDiscountBooks(List<Book> books)
+        {
+            return books.Select(x => new Book { Id = x.Id, Quantity = 1, UnitPrice = x.UnitPrice }).ToList();
+        }
+
+        private List<Book> GetRemainBooks(List<Book> books)
+        {
+            return books.Where(x => x.Quantity > 1).Select(x => new Book { Id = x.Id, Quantity = x.Quantity - 1, UnitPrice = x.UnitPrice }).ToList();
+        }
+
+        private decimal GetDiscountRate(int count)
         {
             switch (count)
             {
