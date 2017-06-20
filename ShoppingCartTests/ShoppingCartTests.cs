@@ -32,7 +32,7 @@ namespace ShoppingCart.Tests
         }
 
         [TestMethod()]
-        public void CalculatePriceTest_Id_1_Quantity_1_Id_2_Quantity_1_should_return_190m()
+        public void CalculatePriceTest_Id_1_2_Quantity_1_1_should_return_190m()
         {
             //arrange
             var target = new ShoppingCart();
@@ -51,7 +51,7 @@ namespace ShoppingCart.Tests
         }
 
         [TestMethod()]
-        public void CalculatePriceTest_Id_1_Quantity_1_Id_2_Quantity_1_Id_3_Quantity_1_should_return_270m()
+        public void CalculatePriceTest_Id_1_2_3_Quantity_1_1_1_should_return_270m()
         {
             //arrange
             var target = new ShoppingCart();
@@ -71,7 +71,7 @@ namespace ShoppingCart.Tests
         }
 
         [TestMethod()]
-        public void CalculatePriceTest_Id_1_Quantity_1_Id_2_Quantity_1_Id_3_Quantity_1_Id_4_Quantity_1_should_return_320m()
+        public void CalculatePriceTest_Id_1_2_3_4_Quantity_1_1_1_1_should_return_320m()
         {
             //arrange
             var target = new ShoppingCart();
