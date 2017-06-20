@@ -174,5 +174,23 @@ namespace ShoppingCart.Tests
             //assert
             Assert.AreEqual(expected, actual);
         }
+
+        [TestMethod()]
+        public void CalculatePriceTest_Id_1_Quantity_10_should_return_1000m()
+        {
+            //arrange
+            var target = new ShoppingCart();
+            var books = new List<Book>
+            {
+                new Book() { Id = 1, Quantity = 10, UnitPrice = 100m },
+            };
+            var expected = 1000m;
+
+            //act
+            var actual = target.CalculatePrice(books);
+
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
