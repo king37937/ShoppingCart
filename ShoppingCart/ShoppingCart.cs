@@ -9,6 +9,15 @@ namespace ShoppingCart
 {
     public class ShoppingCart
     {
+        private readonly Dictionary<int, decimal> _disconnectRate = new Dictionary<int, decimal>
+        {
+            { 1, 1m },
+            { 2, 0.95m },
+            { 3, 0.9m },
+            { 4, 0.8m },
+            { 5, 0.75m },
+        };
+
         public decimal CalculatePrice(List<Book> books)
         {
             var totalPrice = CalculateDiscountPrice(GetDiscountBooks(books));
@@ -23,36 +32,18 @@ namespace ShoppingCart
 
         private decimal CalculateDiscountPrice(List<Book> discountBooks)
         {
-            return discountBooks.Sum(x => x.UnitPrice) * GetDiscountRate(discountBooks.Count);
+            return discountBooks.Sum(x => x.UnitPrice) * _disconnectRate[discountBooks.Count];
         }
 
         private List<Book> GetDiscountBooks(List<Book> books)
         {
-            return books.Select(x => new Book { Id = x.Id, Quantity = 1, UnitPrice = x.UnitPrice }).ToList();
+            return books.GroupBy(x => x.Id).Select(x => x.First()).ToList();
         }
 
         private List<Book> GetRemainBooks(List<Book> books)
         {
-            return books.Where(x => x.Quantity > 1).Select(x => new Book { Id = x.Id, Quantity = x.Quantity - 1, UnitPrice = x.UnitPrice }).ToList();
-        }
-
-        private decimal GetDiscountRate(int count)
-        {
-            switch (count)
-            {
-                case 1:
-                    return 1m;
-                case 2:
-                    return 0.95m;
-                case 3:
-                    return 0.9m;
-                case 4:
-                    return 0.8m;
-                case 5:
-                    return 0.75m;
-                default:
-                    throw new ArgumentException("Invaild argument count: " + count);
-            }
+            books.ForEach(x => x.Quantity--);
+            return books.Where(x => x.Quantity >= 1).ToList();
         }
     }
 }
